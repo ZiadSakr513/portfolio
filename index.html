@@ -311,6 +311,41 @@
       transform: translateY(0);
     }
 
+    /* Services */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    .service-card:hover {
+      border-color: rgba(167, 139, 250, 0.25);
+      background: rgba(167, 139, 250, 0.04);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+    }
+    .service-card .icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .service-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+    .service-card p {
+      font-size: 0.88rem;
+      color: #808090;
+      line-height: 1.6;
+    }
+
     /* About */
     .about-text {
       max-width: 750px;
@@ -568,16 +603,10 @@
       }
       nav ul.show { display: flex; }
       .menu-toggle { display: block; }
-      .about-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-      .about-stats { grid-template-columns: 1fr 1fr; }
       .projects-grid { grid-template-columns: 1fr; }
       .section-header h2 { font-size: 2rem; }
     }
     @media (max-width: 480px) {
-      .about-stats { grid-template-columns: 1fr; }
       .skills-grid { grid-template-columns: repeat(2, 1fr); }
       .hero h1 { letter-spacing: -1.5px; }
     }
@@ -603,6 +632,7 @@
     <button class="menu-toggle" id="menuToggle" aria-label="Menu">&#9776;</button>
     <ul id="navLinks">
       <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -614,8 +644,8 @@
     <h1>Hi, I'm <span>Ziad Sakr</span></h1>
     <p class="subtitle">I build modern <span>web applications</span> and explore <span>intelligent systems</span></p>
     <div class="cta-group">
-      <a href="#projects" class="cta primary">View My Work &darr;</a>
-      <a href="#contact" class="cta secondary">Get In Touch</a>
+      <a href="#services" class="cta primary">Let's Work Together &darr;</a>
+      <a href="#projects" class="cta secondary">View Projects</a>
     </div>
     <div class="scroll-indicator">
       <div class="mouse"></div>
@@ -659,6 +689,35 @@
     </div>
   </section>
 
+  <section id="services">
+    <div class="section-header reveal">
+      <h2>What I <span>Do</span></h2>
+      <p>Services I offer</p>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="icon">&#9900;</div>
+        <h3>Fullstack Web Development</h3>
+        <p>Custom web applications from scratch — responsive frontends, robust backends, and database integration tailored to your needs.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon">&#9881;</div>
+        <h3>AI Chatbot Integration</h3>
+        <p>Add intelligent conversational AI to your existing website or build a new chatbot-powered experience from the ground up.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon">&#9889;</div>
+        <h3>Web Scraping &amp; Automation</h3>
+        <p>Extract and aggregate data from websites to power your business insights, price comparisons, or automated workflows.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon">&#9666;</div>
+        <h3>Software Engineering</h3>
+        <p>Clean, maintainable code with best practices — from prototyping to production-ready software solutions.</p>
+      </div>
+    </div>
+  </section>
+
   <section id="projects">
     <div class="section-header reveal">
       <h2>Featured <span>Projects</span></h2>
@@ -673,6 +732,7 @@
         <div class="card-body">
           <h3>AI Chatbot Integration</h3>
           <p>An AI-powered chatbot integrated into a website, providing intelligent responses and user interaction.</p>
+          <div class="tags"><span>JavaScript</span><span>AI/ML APIs</span></div>
         </div>
       </div>
       <div class="project-card reveal">
@@ -683,6 +743,7 @@
         <div class="card-body">
           <h3>AI Chatbot – Dashboard View</h3>
           <p>Another view of the AI chatbot interface, showing conversation history and analytics.</p>
+          <div class="tags"><span>JavaScript</span><span>AI/ML APIs</span></div>
         </div>
       </div>
       <div class="project-card reveal">
@@ -693,6 +754,7 @@
         <div class="card-body">
           <h3>Landing Page</h3>
           <p>Modern SaaS-style landing page with a clean dark UI and responsive layout. Designed to showcase the platform's features with smooth visuals and strong user-focused branding.</p>
+          <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
         </div>
       </div>
       <div class="project-card reveal">
@@ -703,6 +765,7 @@
         <div class="card-body">
           <h3>Authentication System</h3>
           <p>Secure and fully functional authentication system with working Login and Sign Up backend integration. Includes form validation, Google sign-in support, and a polished responsive interface.</p>
+          <div class="tags"><span>Node.js</span><span>Express.js</span><span>MongoDB</span><span>JavaScript</span></div>
         </div>
       </div>
       <div class="project-card reveal">
@@ -713,6 +776,7 @@
         <div class="card-body">
           <h3>Hotel Prices Comparison</h3>
           <p>A hotel price comparison website that aggregates room rates using web scraping. Users can search for hotels in any city and instantly see price comparisons, helping them find the best deal without visiting multiple sites.</p>
+          <div class="tags"><span>Web Scraping</span><span>JavaScript</span></div>
         </div>
       </div>
     </div>
@@ -735,6 +799,14 @@
         <a href="https://github.com/ZiadSakr513" target="_blank" rel="noopener">
           <span class="icon">&lt;/&gt;</span>
           github.com/ZiadSakr513
+        </a>
+        <a href="https://www.linkedin.com/in/ziad-sakr-2b0a942ba/" target="_blank" rel="noopener">
+          <span class="icon">&#128100;</span>
+          linkedin.com/in/ziad-sakr-2b0a942ba
+        </a>
+        <a href="resume.html" target="_blank" style="border-color: rgba(167, 139, 250, 0.3); background: rgba(167, 139, 250, 0.06);">
+          <span class="icon">&#128196;</span>
+          View Resume
         </a>
       </div>
     </div>
