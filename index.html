@@ -14,6 +14,8 @@
     }
     html {
       scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
     }
     body {
       font-family: 'Inter', sans-serif;
@@ -21,7 +23,12 @@
       color: #e0e0e0;
       line-height: 1.7;
       overflow-x: hidden;
+      min-width: 0;
     }
+    body.lightbox-open {
+      overflow: hidden;
+    }
+    img { max-width: 100%; }
     a { color: inherit; text-decoration: none; }
     ::selection { background: rgba(167, 139, 250, 0.3); }
 
@@ -35,9 +42,12 @@
     }
     .bg-orbs .orb {
       position: absolute;
+      --orb-x: 0px;
+      --orb-y: 0px;
       border-radius: 50%;
       filter: blur(120px);
       opacity: 0.3;
+      transform: translate(var(--orb-x), var(--orb-y)) scale(1);
       animation: orbFloat 20s ease-in-out infinite;
     }
     .bg-orbs .orb:nth-child(1) {
@@ -56,14 +66,15 @@
       width: 400px; height: 400px;
       background: #3b82f6;
       top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
+      --orb-x: -50%;
+      --orb-y: -50%;
       animation-delay: -14s;
     }
     @keyframes orbFloat {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      25% { transform: translate(80px, -60px) scale(1.1); }
-      50% { transform: translate(-40px, 80px) scale(0.9); }
-      75% { transform: translate(60px, 40px) scale(1.05); }
+      0%, 100% { transform: translate(var(--orb-x), var(--orb-y)) scale(1); }
+      25% { transform: translate(calc(var(--orb-x) + 80px), calc(var(--orb-y) - 60px)) scale(1.1); }
+      50% { transform: translate(calc(var(--orb-x) - 40px), calc(var(--orb-y) + 80px)) scale(0.9); }
+      75% { transform: translate(calc(var(--orb-x) + 60px), calc(var(--orb-y) + 40px)) scale(1.05); }
     }
 
     /* Cursor glow */
@@ -154,7 +165,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 6rem 2rem 6rem;
+      padding: 6rem 2rem 8rem;
       position: relative;
       z-index: 2;
     }
@@ -243,7 +254,7 @@
     }
     .hero .scroll-indicator {
       position: absolute;
-      bottom: 2.5rem;
+      bottom: 1.75rem;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
@@ -289,6 +300,7 @@
       margin: 0 auto;
       position: relative;
       z-index: 2;
+      scroll-margin-top: 7rem;
     }
     .section-header {
       text-align: center;
@@ -408,7 +420,6 @@
       position: relative;
     }
     .project-card:hover {
-      transform: translateY(-8px);
       border-color: rgba(167, 139, 250, 0.25);
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
     }
@@ -445,25 +456,19 @@
       color: #fff;
       font-size: 1rem;
       opacity: 0;
-      transform: scale(0.8);
-      transition: all 0.3s;
+      transition: opacity 0.3s;
       z-index: 3;
       pointer-events: none;
     }
     .project-card:hover .img-wrap .expand-icon {
       opacity: 1;
-      transform: scale(1);
     }
     .project-card .card-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.5s ease;
       cursor: pointer;
-    }
-    .project-card:hover .card-img {
-      transform: scale(1.05);
     }
     .project-card .card-body {
       padding: 1.5rem;
@@ -568,6 +573,9 @@
       font-weight: 500;
       font-size: 1rem;
       transition: all 0.3s;
+      min-width: 0;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
     .contact-links a:hover {
       background: rgba(167, 139, 250, 0.08);
@@ -618,7 +626,7 @@
       nav ul.show { display: flex; }
       .menu-toggle { display: block; }
       section { padding: 3rem 1.25rem; }
-      .hero { padding: 5rem 1.25rem 5rem; }
+      .hero { padding: 5rem 1.25rem 7rem; }
       .hero .profile-pic { width: 90px; height: 90px; }
       .hero h1 { font-size: clamp(2rem, 7vw, 3rem); letter-spacing: -1.5px; }
       .hero .subtitle { font-size: 1rem; }
@@ -643,6 +651,30 @@
       .skills-grid { gap: 0.5rem; }
       .skill-tag { padding: 0.6rem 0.8rem; font-size: 0.8rem; }
       .services-grid { gap: 0.75rem; }
+      .contact-links a {
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+    }
+    @media (max-height: 680px) {
+      .hero {
+        min-height: auto;
+        padding-bottom: 4rem;
+      }
+      .hero .scroll-indicator {
+        display: none;
+      }
+    }
+    @media (hover: none), (pointer: coarse), (max-width: 768px) {
+      .cursor-glow {
+        display: none;
+      }
+      .project-card:hover,
+      .service-card:hover,
+      .skill-tag:hover,
+      .hero .cta:hover {
+        transform: none;
+      }
     }
   </style>
 </head>
@@ -663,7 +695,7 @@
 
   <nav>
     <div class="logo">ZS.</div>
-    <button class="menu-toggle" id="menuToggle" aria-label="Menu">&#9776;</button>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-controls="navLinks">&#9776;</button>
     <ul id="navLinks">
       <li><a href="#about">About</a></li>
       <li><a href="#services">Services</a></li>
@@ -855,9 +887,38 @@
     // Menu toggle
     const toggle = document.getElementById('menuToggle');
     const navLinks = document.getElementById('navLinks');
-    toggle.addEventListener('click', () => navLinks.classList.toggle('show'));
+    const desktopQuery = window.matchMedia('(min-width: 769px)');
+
+    const closeMenu = () => {
+      navLinks.classList.remove('show');
+      toggle.setAttribute('aria-expanded', 'false');
+    };
+
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('show');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+    });
     document.querySelectorAll('#navLinks a').forEach(link => {
-      link.addEventListener('click', () => navLinks.classList.remove('show'));
+      link.addEventListener('click', closeMenu);
+    });
+    desktopQuery.addEventListener('change', (event) => {
+      if (event.matches) closeMenu();
+    });
+    const keepCurrentSectionAligned = () => {
+      if (!window.location.hash) return;
+
+      const activeSection = document.querySelector(window.location.hash);
+      if (!activeSection) return;
+
+      activeSection.scrollIntoView({ block: 'start', inline: 'nearest' });
+    };
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      if (desktopQuery.matches) closeMenu();
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(keepCurrentSectionAligned, 120);
     });
 
     // Lightbox
@@ -870,14 +931,22 @@
         lightboxImg.src = img.src;
         lightboxImg.alt = img.alt;
         lightbox.classList.add('open');
+        document.body.classList.add('lightbox-open');
       });
     });
-    lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
+    const closeLightbox = () => {
+      lightbox.classList.remove('open');
+      document.body.classList.remove('lightbox-open');
+    };
+    lightboxClose.addEventListener('click', closeLightbox);
     lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) lightbox.classList.remove('open');
+      if (e.target === lightbox) closeLightbox();
     });
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') lightbox.classList.remove('open');
+      if (e.key === 'Escape') {
+        closeLightbox();
+        closeMenu();
+      }
     });
 
     // Scroll reveal
@@ -894,6 +963,7 @@
     // Cursor glow
     const glow = document.getElementById('cursorGlow');
     document.addEventListener('mousemove', (e) => {
+      if (window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
       glow.style.left = e.clientX + 'px';
       glow.style.top = e.clientY + 'px';
     });
