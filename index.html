@@ -1202,27 +1202,40 @@
     }
     @media (max-width: 768px) {
       nav {
-        top: 0.75rem;
-        width: calc(100% - 1.5rem);
-        padding: 0.7rem 1rem;
+        top: calc(env(safe-area-inset-top, 0px) + 0.65rem);
+        left: 0.75rem;
+        right: 0.75rem;
+        width: auto;
+        max-width: none;
+        transform: none;
+        padding: 0.68rem 0.95rem;
+        min-height: 54px;
+        border-radius: 16px;
       }
       nav ul {
         display: none;
         position: absolute;
-        top: 100%;
+        top: calc(100% + 0.55rem);
         left: 0;
+        right: 0;
         width: 100%;
         flex-direction: column;
         background: rgba(10, 10, 20, 0.97);
         backdrop-filter: blur(20px);
-        padding: 1rem 1.5rem;
+        padding: 0.85rem;
         gap: 0.75rem;
-        border-radius: 0 0 16px 16px;
+        border-radius: 16px;
         border: 1px solid rgba(255, 255, 255, 0.06);
-        border-top: none;
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.32);
       }
       nav ul.show { display: flex; }
-      .menu-toggle { display: block; }
+      .menu-toggle {
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        line-height: 1;
+      }
       section { padding: 3rem 1.25rem; }
       .hero {
         padding: 5.5rem 1.25rem 2.5rem;
@@ -1256,6 +1269,11 @@
       footer { padding: 1.5rem 1.25rem; font-size: 0.8rem; }
     }
     @media (max-width: 480px) {
+      nav {
+        left: 0.6rem;
+        right: 0.6rem;
+        padding: 0.62rem 0.85rem;
+      }
       .hero .profile-pic { width: 80px; height: 80px; }
       .hero h1 { font-size: 1.8rem; }
       .hero .badge { font-size: 0.7rem; padding: 0.3rem 0.8rem; }
@@ -1279,7 +1297,7 @@
         display: none;
       }
       .site-particles {
-        opacity: 0.42;
+        opacity: 0.34;
       }
       .hero-orbits,
       .hero-scan,
@@ -1295,6 +1313,15 @@
       }
       .service-card.in-view .icon {
         animation: iconPulse 3s ease-in-out infinite;
+      }
+      section.module-online .section-header h2 span,
+      section.module-online .section-header::before,
+      .project-card.in-view,
+      .service-card.in-view,
+      .skill-tag.in-view,
+      .project-card.in-view .expand-icon,
+      .skill-tag.in-view::after {
+        animation: none;
       }
       section.module-online .section-header h2 span,
       .project-card.in-view,
@@ -1642,7 +1669,7 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       const isCompact = compactMotion.matches;
       const count = isCompact
-        ? Math.min(48, Math.max(26, Math.floor(canvasWidth / 12)))
+        ? Math.min(34, Math.max(20, Math.floor(canvasWidth / 16)))
         : Math.min(190, Math.max(95, Math.floor(canvasWidth / 9)));
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * canvasWidth,
@@ -1654,7 +1681,7 @@
         hue: Math.random() > 0.58 ? '167, 139, 250' : (Math.random() > 0.42 ? '56, 189, 248' : '240, 171, 252'),
         phase: Math.random() * Math.PI * 2
       }));
-      beams = Array.from({ length: isCompact ? 2 : 10 }, (_, index) => ({
+      beams = Array.from({ length: isCompact ? 1 : 10 }, (_, index) => ({
         x: Math.random() * canvasWidth,
         y: (canvasHeight * 0.12) + Math.random() * canvasHeight * 0.72,
         speed: (isCompact ? 0.28 : 0.55) + Math.random() * (isCompact ? 0.42 : 0.82),
@@ -1667,7 +1694,7 @@
 
     const drawPerspectiveGrid = () => {
       const horizon = canvasHeight * (0.57 + scrollProgressValue * 0.08);
-      const rows = compactMotion.matches ? 4 : 12;
+      const rows = compactMotion.matches ? 3 : 12;
       ctx.save();
       ctx.globalCompositeOperation = 'lighter';
       for (let i = 0; i < rows; i++) {
@@ -1681,7 +1708,7 @@
         ctx.lineWidth = 1;
         ctx.stroke();
       }
-      const columnLimit = compactMotion.matches ? 5 : 10;
+      const columnLimit = compactMotion.matches ? 4 : 10;
       for (let i = -columnLimit; i <= columnLimit; i++) {
         const startX = canvasWidth * 0.5 + i * 34;
         ctx.beginPath();
@@ -1757,7 +1784,7 @@
           const dx = p.x - q.x;
           const dy = p.y - q.y;
           const dist = Math.hypot(dx, dy);
-          const linkDistance = compactMotion.matches ? 74 : 156;
+          const linkDistance = compactMotion.matches ? 58 : 156;
           if (dist < linkDistance && Math.abs(p.depth - q.depth) < 0.48) {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
