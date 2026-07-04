@@ -1202,14 +1202,15 @@
     }
     @media (max-width: 768px) {
       nav {
+        position: sticky !important;
         top: calc(env(safe-area-inset-top, 0px) + 0.65rem) !important;
-        left: max(1rem, env(safe-area-inset-left, 0px)) !important;
-        right: max(1rem, env(safe-area-inset-right, 0px)) !important;
+        left: auto !important;
+        right: auto !important;
         width: auto !important;
         min-width: 0 !important;
         max-width: none !important;
         transform: none !important;
-        margin: 0 !important;
+        margin: 0.65rem 1rem 0 !important;
         padding: 0.68rem 0.9rem;
         min-height: 54px;
         border-radius: 16px;
@@ -1249,7 +1250,7 @@
       }
       section { padding: 3rem 1.25rem; }
       .hero {
-        padding: 5.5rem 1.25rem 2.5rem;
+        padding: 3.6rem 1.25rem 2.5rem;
       }
       .hero .profile-pic { width: 90px; height: 90px; }
       .hero h1 { font-size: clamp(2rem, 7vw, 3rem); letter-spacing: -1.5px; }
@@ -1281,10 +1282,12 @@
     }
     @media (max-width: 480px) {
       nav {
-        left: max(0.875rem, env(safe-area-inset-left, 0px)) !important;
-        right: max(0.875rem, env(safe-area-inset-right, 0px)) !important;
+        left: auto !important;
+        right: auto !important;
         width: auto !important;
         max-width: none !important;
+        margin-left: 0.85rem !important;
+        margin-right: 0.85rem !important;
         padding: 0.62rem 0.82rem;
       }
       .hero .profile-pic { width: 80px; height: 80px; }
@@ -1301,7 +1304,7 @@
     @media (max-height: 680px) {
       .hero {
         min-height: 100svh;
-        padding-top: 5.5rem;
+        padding-top: 3.25rem;
         padding-bottom: 1.5rem;
       }
     }
