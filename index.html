@@ -1202,18 +1202,17 @@
     }
     @media (max-width: 768px) {
       nav {
-        top: calc(env(safe-area-inset-top, 0px) + 0.65rem);
-        left: max(0.75rem, env(safe-area-inset-left, 0px));
-        right: auto;
-        width: calc(100vw - 1.5rem);
-        width: calc(100dvw - 1.5rem);
-        max-width: calc(100vw - 1.5rem);
-        max-width: calc(100dvw - 1.5rem);
-        transform: none;
-        padding: 0.68rem 0.95rem;
+        top: calc(env(safe-area-inset-top, 0px) + 0.65rem) !important;
+        left: max(1rem, env(safe-area-inset-left, 0px)) !important;
+        right: max(1rem, env(safe-area-inset-right, 0px)) !important;
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        transform: none !important;
+        margin: 0 !important;
+        padding: 0.68rem 0.9rem;
         min-height: 54px;
         border-radius: 16px;
-        min-width: 0;
         overflow: visible;
       }
       nav ul {
@@ -1221,9 +1220,10 @@
         position: absolute;
         top: calc(100% + 0.55rem);
         left: 0;
-        right: auto;
-        width: 100%;
-        max-width: 100%;
+        right: 0;
+        width: auto;
+        min-width: 0;
+        max-width: none;
         flex-direction: column;
         background: rgba(10, 10, 20, 0.97);
         backdrop-filter: blur(20px);
@@ -1240,6 +1240,12 @@
         width: 38px;
         height: 38px;
         line-height: 1;
+        flex: 0 0 38px;
+      }
+      nav .logo,
+      nav ul,
+      .menu-toggle {
+        min-width: 0;
       }
       section { padding: 3rem 1.25rem; }
       .hero {
@@ -1275,13 +1281,11 @@
     }
     @media (max-width: 480px) {
       nav {
-        left: max(0.6rem, env(safe-area-inset-left, 0px));
-        right: auto;
-        width: calc(100vw - 1.2rem);
-        width: calc(100dvw - 1.2rem);
-        max-width: calc(100vw - 1.2rem);
-        max-width: calc(100dvw - 1.2rem);
-        padding: 0.62rem 0.85rem;
+        left: max(0.875rem, env(safe-area-inset-left, 0px)) !important;
+        right: max(0.875rem, env(safe-area-inset-right, 0px)) !important;
+        width: auto !important;
+        max-width: none !important;
+        padding: 0.62rem 0.82rem;
       }
       .hero .profile-pic { width: 80px; height: 80px; }
       .hero h1 { font-size: 1.8rem; }
