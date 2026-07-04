@@ -1279,7 +1279,7 @@
         display: none;
       }
       .site-particles {
-        opacity: 0.55;
+        opacity: 0.42;
       }
       .hero-orbits,
       .hero-scan,
@@ -1295,6 +1295,25 @@
       }
       .service-card.in-view .icon {
         animation: iconPulse 3s ease-in-out infinite;
+      }
+      section.module-online .section-header h2 span,
+      .project-card.in-view,
+      .service-card.in-view,
+      .skill-tag.in-view,
+      .project-card.is-spotlight,
+      .project-card.is-spotlight .img-wrap::after,
+      .project-card.is-spotlight .tags span,
+      .skill-tag.in-view::after {
+        animation-duration: 7s;
+        animation-iteration-count: infinite;
+      }
+      section:not(.hero)::after {
+        animation-duration: 12s;
+        opacity: 0.18;
+      }
+      section[id] .section-header::after {
+        filter: blur(18px);
+        opacity: 0.45;
       }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -1623,7 +1642,7 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       const isCompact = compactMotion.matches;
       const count = isCompact
-        ? Math.min(72, Math.max(38, Math.floor(canvasWidth / 8)))
+        ? Math.min(48, Math.max(26, Math.floor(canvasWidth / 12)))
         : Math.min(190, Math.max(95, Math.floor(canvasWidth / 9)));
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * canvasWidth,
@@ -1635,12 +1654,12 @@
         hue: Math.random() > 0.58 ? '167, 139, 250' : (Math.random() > 0.42 ? '56, 189, 248' : '240, 171, 252'),
         phase: Math.random() * Math.PI * 2
       }));
-      beams = Array.from({ length: isCompact ? 4 : 10 }, (_, index) => ({
+      beams = Array.from({ length: isCompact ? 2 : 10 }, (_, index) => ({
         x: Math.random() * canvasWidth,
         y: (canvasHeight * 0.12) + Math.random() * canvasHeight * 0.72,
-        speed: (isCompact ? 0.36 : 0.55) + Math.random() * 0.82,
-        width: 130 + Math.random() * (isCompact ? 150 : 260),
-        alpha: 0.06 + Math.random() * (isCompact ? 0.06 : 0.12),
+        speed: (isCompact ? 0.28 : 0.55) + Math.random() * (isCompact ? 0.42 : 0.82),
+        width: 120 + Math.random() * (isCompact ? 90 : 260),
+        alpha: 0.045 + Math.random() * (isCompact ? 0.035 : 0.12),
         slope: (Math.random() > 0.5 ? 1 : -1) * (26 + Math.random() * 42),
         delay: index * 0.4
       }));
@@ -1648,7 +1667,7 @@
 
     const drawPerspectiveGrid = () => {
       const horizon = canvasHeight * (0.57 + scrollProgressValue * 0.08);
-      const rows = compactMotion.matches ? 7 : 12;
+      const rows = compactMotion.matches ? 4 : 12;
       ctx.save();
       ctx.globalCompositeOperation = 'lighter';
       for (let i = 0; i < rows; i++) {
@@ -1662,7 +1681,8 @@
         ctx.lineWidth = 1;
         ctx.stroke();
       }
-      for (let i = -10; i <= 10; i++) {
+      const columnLimit = compactMotion.matches ? 5 : 10;
+      for (let i = -columnLimit; i <= columnLimit; i++) {
         const startX = canvasWidth * 0.5 + i * 34;
         ctx.beginPath();
         ctx.moveTo(startX, horizon);
@@ -1691,7 +1711,7 @@
         ctx.moveTo(beam.x - beam.width, beam.y + beam.slope);
         ctx.lineTo(beam.x + beam.width, beam.y - beam.slope);
         ctx.strokeStyle = gradient;
-        ctx.lineWidth = compactMotion.matches ? 1.4 : 2.6;
+        ctx.lineWidth = compactMotion.matches ? 1 : 2.6;
         ctx.stroke();
       });
       ctx.restore();
@@ -1728,7 +1748,7 @@
         ctx.arc(p.x, p.y, (p.r + Math.sin(p.phase + particleTime * 0.04) * 0.35) * (0.65 + p.depth), 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${p.hue}, ${0.34 + p.depth * 0.56})`;
         ctx.shadowColor = `rgba(${p.hue}, ${0.36 + p.depth * 0.36})`;
-        ctx.shadowBlur = 12 + p.depth * 22;
+        ctx.shadowBlur = compactMotion.matches ? 0 : 12 + p.depth * 22;
         ctx.fill();
         ctx.shadowBlur = 0;
 
@@ -1737,13 +1757,13 @@
           const dx = p.x - q.x;
           const dy = p.y - q.y;
           const dist = Math.hypot(dx, dy);
-          const linkDistance = compactMotion.matches ? 102 : 156;
+          const linkDistance = compactMotion.matches ? 74 : 156;
           if (dist < linkDistance && Math.abs(p.depth - q.depth) < 0.48) {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(q.x, q.y);
-            ctx.strokeStyle = `rgba(167, 139, 250, ${0.2 * (1 - dist / linkDistance) * ((p.depth + q.depth) / 2)})`;
-            ctx.lineWidth = 0.65 + ((p.depth + q.depth) / 2) * 0.75;
+            ctx.strokeStyle = `rgba(167, 139, 250, ${(compactMotion.matches ? 0.11 : 0.2) * (1 - dist / linkDistance) * ((p.depth + q.depth) / 2)})`;
+            ctx.lineWidth = compactMotion.matches ? 0.7 : 0.65 + ((p.depth + q.depth) / 2) * 0.75;
             ctx.stroke();
           }
         }
@@ -1905,7 +1925,9 @@
       if (bestEntry) setSpotlight(bestEntry.target);
     }, { threshold: [0.32, 0.5, 0.68] });
 
-    projectCards.forEach(card => spotlightObserver.observe(card));
+    if (!compactMotion.matches) {
+      projectCards.forEach(card => spotlightObserver.observe(card));
+    }
 
     const glow = document.getElementById('cursorGlow');
     document.addEventListener('mousemove', (e) => {
