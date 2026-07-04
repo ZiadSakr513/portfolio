@@ -39,6 +39,8 @@
       -webkit-text-size-adjust: 100%;
       text-size-adjust: 100%;
       touch-action: pan-y;
+      max-width: 100%;
+      overflow-x: hidden;
     }
     body {
       font-family: 'Inter', sans-serif;
@@ -50,6 +52,7 @@
       color: var(--text);
       line-height: 1.7;
       overflow-x: hidden;
+      max-width: 100%;
       min-width: 0;
       touch-action: pan-y;
     }
@@ -1202,15 +1205,15 @@
     }
     @media (max-width: 768px) {
       nav {
-        position: sticky !important;
-        top: calc(env(safe-area-inset-top, 0px) + 0.65rem) !important;
+        position: relative !important;
+        top: auto !important;
         left: auto !important;
         right: auto !important;
-        width: auto !important;
+        width: calc(100% - 2rem) !important;
         min-width: 0 !important;
-        max-width: none !important;
+        max-width: calc(100% - 2rem) !important;
         transform: none !important;
-        margin: 0.65rem 1rem 0 !important;
+        margin: 0.65rem auto 0 !important;
         padding: 0.68rem 0.9rem;
         min-height: 54px;
         border-radius: 16px;
@@ -1284,10 +1287,10 @@
       nav {
         left: auto !important;
         right: auto !important;
-        width: auto !important;
-        max-width: none !important;
-        margin-left: 0.85rem !important;
-        margin-right: 0.85rem !important;
+        width: calc(100% - 1.7rem) !important;
+        max-width: calc(100% - 1.7rem) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
         padding: 0.62rem 0.82rem;
       }
       .hero .profile-pic { width: 80px; height: 80px; }
