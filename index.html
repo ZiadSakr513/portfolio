@@ -988,6 +988,23 @@
       background-position: 0 0, 140% 0, 0 0;
       animation: shineSweep 2.15s ease-in-out infinite;
     }
+    .project-card.cvforge-card .img-wrap::after {
+      background:
+        linear-gradient(180deg, transparent 52%, rgba(7, 7, 13, 0.58) 100%),
+        linear-gradient(110deg, transparent 0 42%, rgba(255, 255, 255, 0.09) 50%, transparent 60% 100%),
+        radial-gradient(circle at 70% 10%, rgba(56, 189, 248, 0.11), transparent 46%);
+      background-position: 0 0, -170% 0, 0 0;
+      background-size: auto, 260% 100%, auto;
+      transition: opacity 0.65s ease, background-position 1.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .project-card.cvforge-card:hover .img-wrap::after,
+    .project-card.cvforge-card.is-spotlight .img-wrap::after {
+      opacity: 0.82;
+      background-position: 0 0, 170% 0, 0 0;
+    }
+    .project-card.cvforge-card.is-spotlight .img-wrap::after {
+      animation: none;
+    }
     .project-card .img-wrap .expand-icon {
       position: absolute;
       top: 1rem;
@@ -1021,6 +1038,13 @@
     }
     .project-card:hover .card-img {
       filter: saturate(1.18) contrast(1.07);
+    }
+    .project-card.cvforge-card .card-img {
+      filter: saturate(0.98) contrast(0.98) brightness(0.96);
+      transition: filter 0.65s ease;
+    }
+    .project-card.cvforge-card:hover .card-img {
+      filter: saturate(1.04) contrast(1.01) brightness(0.98);
     }
     .project-card .card-body {
       padding: 1.35rem 1.35rem 1.45rem;
@@ -1059,6 +1083,33 @@
     .project-card.is-spotlight .tags span:nth-child(2) { animation-delay: 0.16s; }
     .project-card.is-spotlight .tags span:nth-child(3) { animation-delay: 0.32s; }
     .project-card.is-spotlight .tags span:nth-child(4) { animation-delay: 0.48s; }
+    .project-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 1.15rem;
+    }
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      min-height: 36px;
+      padding: 0.42rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      background: rgba(56, 189, 248, 0.08);
+      color: #e0f2fe;
+      font-size: 0.78rem;
+      font-weight: 800;
+      transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    }
+    .project-link:hover {
+      transform: translateY(-2px);
+      border-color: rgba(56, 189, 248, 0.52);
+      background: rgba(56, 189, 248, 0.14);
+      box-shadow: 0 10px 28px rgba(56, 189, 248, 0.14);
+    }
 
     .lightbox {
       display: none;
@@ -1465,8 +1516,10 @@
       <span class="skill-tag">HTML &amp; CSS</span>
       <span class="skill-tag">JavaScript</span>
       <span class="skill-tag">React</span>
+      <span class="skill-tag">Next.js</span>
       <span class="skill-tag">Node.js</span>
       <span class="skill-tag">Python</span>
+      <span class="skill-tag">Docker</span>
       <span class="skill-tag">REST APIs</span>
       <span class="skill-tag">Database Design</span>
       <span class="skill-tag">AI / ML</span>
@@ -1510,6 +1563,20 @@
       <p>Some things I've built</p>
     </div>
     <div class="projects-grid">
+      <div class="project-card reveal cvforge-card">
+        <div class="img-wrap">
+          <img class="card-img" src="cvforge.png" alt="CVForge resume builder screenshot" loading="lazy" />
+          <div class="expand-icon">&#8599;</div>
+        </div>
+        <div class="card-body">
+          <h3>CVForge Resume Builder</h3>
+          <p>A no-login resume builder with reusable resumes, clean templates, live preview, and browser PDF export in one focused workspace.</p>
+          <div class="tags"><span>Next.js</span><span>React</span><span>Docker</span><span>JavaScript</span></div>
+          <div class="project-actions">
+            <a class="project-link" href="https://resume-builder-five-olive.vercel.app/" target="_blank" rel="noopener">Live Demo &#8599;</a>
+          </div>
+        </div>
+      </div>
       <div class="project-card reveal">
         <div class="img-wrap">
           <img class="card-img" src="Ai_chat (2).png" alt="AI Chatbot screenshot" loading="lazy" />
