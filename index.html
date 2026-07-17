@@ -1136,6 +1136,19 @@
       cursor: default;
       animation: scaleIn 0.3s ease;
     }
+    .lightbox video {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 12px;
+      cursor: default;
+      background: #000;
+      animation: scaleIn 0.3s ease;
+    }
+    .lightbox img,
+    .lightbox video { display: none; }
+    .lightbox.show-img img { display: block; }
+    .lightbox.show-video video { display: block; }
     @keyframes scaleIn {
       from { transform: scale(0.9); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
@@ -1455,6 +1468,7 @@
   <div class="lightbox" id="lightbox">
     <button class="close" id="lightboxClose">&times;</button>
     <img id="lightboxImg" src="" alt="" />
+    <video id="lightboxVideo" src="" controls playsinline></video>
   </div>
 
   <nav>
@@ -1594,6 +1608,28 @@
       </div>
       <div class="project-card reveal">
         <div class="img-wrap">
+          <img class="card-img" src="Ai_circuit_simulation.png" alt="AI Circuit Simulation screenshot" data-video="Ai_Circuit_Simulation.mp4" loading="lazy" />
+          <div class="expand-icon">&#9654;</div>
+        </div>
+        <div class="card-body">
+          <h3>AI Circuit Simulation</h3>
+          <p>An AI-driven circuit simulation tool that lets you describe or design circuits and instantly visualize their behavior, making it easier to prototype, test, and understand electronic designs. Click the thumbnail to watch it in action.</p>
+          <div class="tags"><span>AI/ML</span><span>Simulation</span><span>Next.js</span></div>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="img-wrap">
+          <img class="card-img" src="hotel-prices-website.png" alt="Hotel Prices website screenshot" loading="lazy" />
+          <div class="expand-icon">&#8599;</div>
+        </div>
+        <div class="card-body">
+          <h3>Hotel Prices Comparison</h3>
+          <p>A hotel price comparison website that aggregates room rates using web scraping, helping users find the best deal without visiting multiple sites.</p>
+          <div class="tags"><span>Web Scraping</span><span>JavaScript</span></div>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="img-wrap">
           <img class="card-img" src="signup login website.png" alt="Login Signup website screenshot" loading="lazy" />
           <div class="expand-icon">&#8599;</div>
         </div>
@@ -1612,17 +1648,6 @@
           <h3>Authentication System</h3>
           <p>Secure and fully functional authentication system with working Login and Sign Up backend integration. Includes form validation, Google sign-in support, and a polished responsive interface.</p>
           <div class="tags"><span>Node.js</span><span>Express.js</span><span>MongoDB</span><span>JavaScript</span></div>
-        </div>
-      </div>
-      <div class="project-card reveal">
-        <div class="img-wrap">
-          <img class="card-img" src="hotel-prices-website.png" alt="Hotel Prices website screenshot" loading="lazy" />
-          <div class="expand-icon">&#8599;</div>
-        </div>
-        <div class="card-body">
-          <h3>Hotel Prices Comparison</h3>
-          <p>A hotel price comparison website that aggregates room rates using web scraping, helping users find the best deal without visiting multiple sites.</p>
-          <div class="tags"><span>Web Scraping</span><span>JavaScript</span></div>
         </div>
       </div>
     </div>
@@ -1697,19 +1722,35 @@
 
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxVideo = document.getElementById('lightboxVideo');
     const lightboxClose = document.getElementById('lightboxClose');
 
     document.querySelectorAll('.card-img').forEach(img => {
       img.addEventListener('click', () => {
-        lightboxImg.src = img.src;
-        lightboxImg.alt = img.alt;
-        lightbox.classList.add('open');
-        document.body.classList.add('lightbox-open');
+        const videoSrc = img.dataset.video;
+        if (videoSrc) {
+          lightboxVideo.src = videoSrc;
+          lightbox.classList.remove('show-img');
+          lightbox.classList.add('show-video');
+          lightbox.classList.add('open');
+          document.body.classList.add('lightbox-open');
+          lightboxVideo.play().catch(() => {});
+        } else {
+          lightboxImg.src = img.src;
+          lightboxImg.alt = img.alt;
+          lightbox.classList.remove('show-video');
+          lightbox.classList.add('show-img');
+          lightbox.classList.add('open');
+          document.body.classList.add('lightbox-open');
+        }
       });
     });
     const closeLightbox = () => {
-      lightbox.classList.remove('open');
+      lightbox.classList.remove('open', 'show-img', 'show-video');
       document.body.classList.remove('lightbox-open');
+      lightboxVideo.pause();
+      lightboxVideo.removeAttribute('src');
+      lightboxVideo.load();
     };
     lightboxClose.addEventListener('click', closeLightbox);
     lightbox.addEventListener('click', (e) => {
