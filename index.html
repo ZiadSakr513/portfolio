@@ -910,6 +910,8 @@
       box-shadow: 0 14px 42px rgba(0, 0, 0, 0.18);
       transform: perspective(1000px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
       transform-style: preserve-3d;
+      display: flex;
+      flex-direction: column;
     }
     .project-card::before {
       content: '';
@@ -1048,6 +1050,9 @@
     }
     .project-card .card-body {
       padding: 1.35rem 1.35rem 1.45rem;
+      display: flex;
+      flex: 1;
+      flex-direction: column;
     }
     .project-card h3 {
       font-size: 1.08rem;
@@ -1087,7 +1092,8 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.65rem;
-      margin-top: 1.15rem;
+      margin-top: auto;
+      padding-top: 1.15rem;
     }
     .project-link {
       display: inline-flex;
